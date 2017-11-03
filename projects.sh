@@ -5,7 +5,7 @@ GREEN="\e[32m"
 RED="\e[31m"
 BOLD="\e[1m"
 
-BASHSCR="${HOME}/_scripts"
+BASHSCR="${HOME}/project-manager"
 
 function printSuccess {
   echo -e "${GREEN}${1}${NOSTYLE}"

@@ -5,7 +5,8 @@ GREEN="\e[32m"
 RED="\e[31m"
 BOLD="\e[1m"
 
-BASHSCR="${HOME}/project-manager"
+BASHSRC="${HOME}/project-manager"
+PROJECTS_DIR="${BASHSRC}/projects"
 
 function printSuccess {
   echo -e "${GREEN}${1}${NOSTYLE}"
@@ -17,13 +18,16 @@ function printError {
 }
 
 function add {
-  echo -n "Please enter project name: "
-  read projName
+  if [ $1 ]; then
+    projName=$1
+  else
+    echo -n "Please enter project name: "
+    read projName
+  fi
 
   projPath="$(pwd)"
-  projScript="${BASHSCR}/projects/${projName}.sh"
+  projScript="${PROJECTS_DIR}/${projName}.sh"
 
-  # echo -n "Do you want to open with atom? [Y/n]: "
   while true; do
     echo -n "Do you want to open with atom? [Y/n]: "
     read yn
@@ -49,7 +53,7 @@ function add {
       echo "atom .\n" >> ${projScript}
     fi
 
-    echo "${additionalCommands}\n" >> $projScript
+    echo "${additionalCommands}\n" >> ${projScript}
 
     printSuccess  "${projName} was added!"
   else
@@ -58,12 +62,23 @@ function add {
 }
 
 function run {
-  . $BASHSCR/projects/$1.sh
+  . $PROJECTS_DIR/$1.sh
+}
+
+function list {
+  for file in "$PROJECTS_DIR"/*
+  do
+    fileName=$(basename "$file")
+    echo ${fileName%.*}
+  done
 }
 
 case $1 in
   add)
-    add
+    add $2
+    ;;
+  list)
+    list
     ;;
   *)
     run $1

@@ -25,3 +25,5 @@ A project manager for the popular zsh.
 	2. If you want to open it in atom if you switch to it
 	3. Add additional commands like `nvm use && npm start`
 3. Type `$ projects foo` to switch to project __foo__
+
+List projects using `$ projects list`
